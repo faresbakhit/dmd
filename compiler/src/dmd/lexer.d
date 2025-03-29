@@ -1486,6 +1486,14 @@ class Lexer
         case 'b':
             c = 8;
             goto Lconsume;
+        case 'e':
+            // Allow the non-standard escape character `\e` in ImportC.
+            if (Ccompile)
+            {
+                c = 27;
+                goto Lconsume;
+            }
+            goto default;
         case 'f':
             c = 12;
             goto Lconsume;
@@ -3633,6 +3641,7 @@ unittest
     test(`0`, '\0');
     test(`a`, '\a');
     test(`b`, '\b');
+    test(`e`, 27, true);
     test(`f`, '\f');
     test(`n`, '\n');
     test(`r`, '\r');
